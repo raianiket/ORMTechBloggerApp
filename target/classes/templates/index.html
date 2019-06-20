@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>TechBlog App</title>
+</head>
+<body>
+
+<h1>Welcome to the tech blogger app</h1>
+<header th:replace="layout :: logged-out"></header>
+<div th:each="p : ${al_posts}">
+    <br>
+    <h2 th:text="${p.getTitle()}"></h2>
+    <i><p th:text="${p.getDate()}"></p></i>
+    <p th:text="${p.getBody()}"></p>
+    <br>
+</div>
+</body>
+</html>
