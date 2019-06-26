@@ -2,6 +2,7 @@ package techblogapp.repository;
 
 import org.springframework.stereotype.Repository;
 import techblogapp.model.Post;
+import techblogapp.model.User;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -52,18 +53,18 @@ public class PostRepository {
 //            e.printStackTrace();
 //        }
     }
-    public Post getOnePost(){
+    public Post getOnePost(Integer postId){
         EntityManager em=emf.createEntityManager();
-        return em.find(Post.class,3);
+        return em.find(Post.class,postId);
     }
-    public void createUserPost(Post post, String user){
+    public void createUserPost(Post post){
         EntityManager em=emf.createEntityManager();
         EntityTransaction et=em.getTransaction();
         try{
             et.begin();  // Start a transaction
             em.persist(post); // Process involved in the database
             et.commit(); // Make changes visible to other users..means write the post object and
-                            //complete the transaction
+            //complete the transaction
         }catch(Exception e){
             et.rollback();
             e.printStackTrace();
@@ -74,4 +75,43 @@ public class PostRepository {
     }
 
 
+    public ArrayList<Post> getUserPost(User loggeduser) {
+        ArrayList<Post> posts=new ArrayList<Post>();
+        EntityManager em=emf.createEntityManager();// SELECT * FROM posts
+        TypedQuery<Post> tq = em.createQuery("Select p from Post p WHERE p.user=:loggeduser", Post.class); //JPQL
+        tq.setParameter("loggeduser",loggeduser);
+        posts=(ArrayList<Post>)tq.getResultList();
+        return posts;
+    }
+
+    public void editPost(Post updatedPost) {
+        EntityManager em=emf.createEntityManager();
+        EntityTransaction et=em.getTransaction();
+        try{
+            et.begin();  // Start a transaction
+            em.merge(updatedPost); // Process involved in the database
+            et.commit(); // Make changes visible to other users..means write the post object and
+            //complete the transaction
+        }catch(Exception e){
+            et.rollback();
+            e.printStackTrace();
+
+        }
+    }
+
+    public void deletePost(Integer postId) {
+        EntityManager em=emf.createEntityManager();
+        EntityTransaction et=em.getTransaction();
+        try{
+            et.begin();  // Start a transaction
+            Post p=em.find(Post.class,postId); // Process involved in the database
+            em.remove(p);
+            et.commit(); // Make changes visible to other users..means write the post object and
+            //complete the transaction
+        }catch(Exception e){
+            et.rollback();
+            e.printStackTrace();
+
+        }
+    }
 }

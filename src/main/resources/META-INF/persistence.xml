@@ -15,16 +15,16 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.jdbc.lob.non_contextual_creation" value="true"></property>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-<!--
+            <!--
 
- hibernate.hbm2ddl.auto can have 4 values :
- 1) create : will override existing database tables and create new table to work
- 2) validate  : I won't create tables and columns...I'll just check whether you have
-                    proper tables in the database(and hence the columns) for entity classes
- 3)update  : make changes to existing table or create one if there is none
- 4) create-drop : create on start of an application and drop when application shuts down
+             hibernate.hbm2ddl.auto can have 4 values :
+             1) create : will override existing database tables and create new table to work
+             2) validate  : I won't create tables and columns...I'll just check whether you have
+                                proper tables in the database(and hence the columns) for entity classes
+             3)update  : make changes to existing table or create one if there is none
+             4) create-drop : create on start of an application and drop when application shuts down
 
- -->
+             -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 

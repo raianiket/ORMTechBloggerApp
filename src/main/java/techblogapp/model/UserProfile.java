@@ -1,4 +1,5 @@
 package techblogapp.model;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;

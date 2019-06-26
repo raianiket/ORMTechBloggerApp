@@ -3,6 +3,7 @@ package techblogapp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import techblogapp.model.Post;
+import techblogapp.model.User;
 import techblogapp.repository.PostRepository;
 
 import javax.persistence.EntityManager;
@@ -22,30 +23,35 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
     public ArrayList<Post> getAllPosts(){
-            return postRepository.getAllPost();
+        return postRepository.getAllPost();
 
     }
-    public ArrayList<Post> getUserPosts(){
-        ArrayList<Post> posts=new ArrayList<Post>();
-        Post p2=new Post(); //Dependency
-        p2.setTitle("Shubham's Post");
-        p2.setBody("This is the body of shuhbam post");
-        p2.setDate(new Date());
-        posts.add(p2);
 
-        return posts;
+    public Post getOnePost(Integer postId){
+        Post post=postRepository.getOnePost(postId);
+        return post;
 
     }
-    public ArrayList<Post> getOnePost(){
-        ArrayList<Post> posts=new ArrayList<Post>();
-        posts.add(postRepository.getOnePost());
+    public ArrayList<Post> getUserPosts(User loggeduser){
+        ArrayList<Post> posts=postRepository.getUserPost(loggeduser);
         return posts;
 
     }
 
-    public void createUserPost(Post post, String loggeduser) {
+    public void createUserPost(Post post) {
         post.setDate(new Date());
-        postRepository.createUserPost(post,loggeduser);
+        postRepository.createUserPost(post);
+
+    }
+
+
+    public void editPost(Post updatedPost) {
+        postRepository.editPost(updatedPost);
+
+    }
+
+    public void deletePost(Integer postId) {
+        postRepository.deletePost(postId);
 
     }
 }

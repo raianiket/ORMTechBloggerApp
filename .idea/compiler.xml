@@ -6,14 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="technical-blogger-app" />
         <module name="TechnicalBloggerApp" />
+        <module name="TechnicalBloggerApp111" />
+        <module name="technical-blogger-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TechnicalBloggerApp111" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="TechnicalBloggerApp" options="-parameters" />
+      <module name="TechnicalBloggerApp111" options="-parameters" />
       <module name="technical-blogger-app" options="-parameters" />
     </option>
   </component>

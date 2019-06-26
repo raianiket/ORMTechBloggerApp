@@ -13,4 +13,3 @@ public class SpringBootStarterApp {
         SpringApplication.run(SpringBootStarterApp.class,args);
     }
 }
-

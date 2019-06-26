@@ -40,7 +40,7 @@ public class TestForController {
     private ArrayList<Post> mockPost=new ArrayList<>();
     @Test
     public void testTheController() throws Exception{
-        mockPost.add(new Post("Shubham's POst","SJDLHj",new Date()));
+        mockPost.add(new Post("Aniket's POst","SJDLHj",new Date()));
         Mockito.when(postService.getAllPosts()).thenReturn(mockPost);
         RequestBuilder requestBuilder= MockMvcRequestBuilders.get("/");
         MvcResult result=mockMvc.perform(requestBuilder).andReturn();
@@ -51,11 +51,10 @@ public class TestForController {
     public void testTheUserController() throws Exception{
         String username="Aniket";
         String password="Ani@123";
-        boolean check=username.equals("Aniket") && password.equals("Ani@123");
-        Mockito.when(userService.loginUser(any(User.class))).thenReturn(check);
+        Mockito.when(userService.loginUser(any(User.class))).thenReturn(new User ("Aniket","Ani@123"));
         RequestBuilder requestBuilder= MockMvcRequestBuilders.post("" +
                 "/user/login").param("username",username).param("password"
-        , password);
+                , password);
         MvcResult result=mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response=result.getResponse();
         Assertions.assertEquals("/posts",response.getRedirectedUrl());
@@ -64,8 +63,7 @@ public class TestForController {
     public void testLoginWithWrongInput() throws Exception{
         String username="Aniket123";
         String password="Ani@123";
-        boolean check=username.equals("Aniket") && password.equals("Ani@123");
-        Mockito.when(userService.loginUser(any(User.class))).thenReturn(check);
+        Mockito.when(userService.loginUser(any(User.class))).thenReturn(null);
         RequestBuilder requestBuilder= MockMvcRequestBuilders.post("" +
                 "/user/login").param("username",username).param("password"
                 , password);

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import techblogapp.model.User;
+import techblogapp.model.UserProfile;
 import techblogapp.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -25,15 +26,28 @@ public class UserController {
 
 
     @RequestMapping(value="/user/registration")
-    public String registration(){
+    public String registration(Model model){
+        // User  ->> (null,null,null,null)
+        User user=new User();
+        UserProfile profile=new UserProfile();
+        user.setProfile(profile);
+        // User -->> (0,null,null,UserProfile->(null,null,null)
+        model.addAttribute("User",user);
         return "user/registration";
+    }
+    @RequestMapping(value="/user/registration",method = RequestMethod.POST)
+    public String registerUser(User user){
+        userService.registerUser(user);
+        return "redirect:/user/login";
     }
 
     @RequestMapping(value="/user/login",method = RequestMethod.POST)
     public String loginUser(User user, Model model, HttpSession session){
-        if(userService.loginUser(user)){
-            model.addAttribute("user",user);
-            session.setAttribute("loggeduser",user);
+        //user.getProfile()-->null
+        User existingUser=userService.loginUser(user);
+        if(existingUser!=null){
+            model.addAttribute("user",existingUser);
+            session.setAttribute("loggeduser",existingUser);
             return "redirect:/posts";
         }
         else
@@ -45,4 +59,5 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
+
 }
