@@ -108,4 +108,6 @@ public class Post {
         this.id = id;
     }
 
+    public void setUser() {
+    }
 }

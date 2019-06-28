@@ -1,6 +1,7 @@
 package techblogapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,7 @@ public class PostController {
             post.getCategories().add(category);
         }
         User user=(User)session.getAttribute("loggeduser"); //Object
+        post.setUser(user);
         postService.createUserPost(post);
 
         return "redirect:/posts";
@@ -63,7 +65,9 @@ public class PostController {
         return "post/edit";
     }
     @RequestMapping(value = "/editPost",method = RequestMethod.POST)
-    public String editPost(Post updatedPost){
+    public String editPost(Post updatedPost,HttpSession session){
+        User loggeduser=(User) session.getAttribute("loggeduser");
+        updatedPost.setUser(loggeduser);
         postService.editPost(updatedPost);
         return "redirect:/posts";
     }

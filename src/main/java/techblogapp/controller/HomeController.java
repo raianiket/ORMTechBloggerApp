@@ -10,7 +10,6 @@ import techblogapp.service.PostService;
 
 import java.util.ArrayList;
 import java.util.Date;
-//<!--7668514258-->
 @Controller
 public class HomeController {
 
